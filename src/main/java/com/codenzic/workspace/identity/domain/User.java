@@ -1,5 +1,6 @@
 package com.codenzic.workspace.identity.domain;
 
+import com.codenzic.workspace.common.security.CurrentOrganizationContext;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -129,5 +130,24 @@ public class User implements UserDetails {
 
     public void removeRole(Role role) {
         roles.remove(role);
+    }
+
+    // Add these methods inside User.java
+
+    public void updateProfile(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public void updateStatus(AccountStatus accountStatus) {
+        this.accountStatus = accountStatus;
+    }
+    private UUID getRequiredOrganizationContext() {
+        UUID orgId = CurrentOrganizationContext.selectedOrganizationId();
+        if (orgId == null) {
+            throw new IllegalStateException("Organization context missing from current request thread.");
+        }
+        return orgId;
     }
 }

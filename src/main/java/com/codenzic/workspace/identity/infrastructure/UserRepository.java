@@ -21,4 +21,12 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @EntityGraph(attributePaths = {"roles", "roles.permissions"})
     Optional<User> findWithRolesById(UUID id);
+
+    // Add these to your existing UserRepository interface
+
+    @EntityGraph(attributePaths = {"roles"})
+    List<User> findAllWithRolesByOrganizationId(UUID organizationId);
+
+    @EntityGraph(attributePaths = {"roles"})
+    Optional<User> findWithRolesByIdAndOrganizationId(UUID id, UUID organizationId);
 }

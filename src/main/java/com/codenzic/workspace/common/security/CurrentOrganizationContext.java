@@ -25,4 +25,5 @@ public final class CurrentOrganizationContext {
     public static void clear() {
         SELECTED_ORGANIZATION.remove();
     }
+
 }
