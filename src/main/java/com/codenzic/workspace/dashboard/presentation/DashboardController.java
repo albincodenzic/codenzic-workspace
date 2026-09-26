@@ -1,0 +1,3 @@
+package com.codenzic.workspace.dashboard.presentation;
+import com.codenzic.workspace.common.api.ApiResponse; import com.codenzic.workspace.dashboard.application.DashboardService; import com.codenzic.workspace.dashboard.presentation.dto.DashboardDto; import lombok.RequiredArgsConstructor; import org.springframework.security.access.prepost.PreAuthorize; import org.springframework.web.bind.annotation.*;
+@RestController @RequestMapping("/api/v1/dashboard") @RequiredArgsConstructor public class DashboardController {private final DashboardService service; @GetMapping @PreAuthorize("hasAuthority('DASHBOARD_VIEW')") public ApiResponse<DashboardDto> get(){return ApiResponse.success(service.get(),"/api/v1/dashboard");}}

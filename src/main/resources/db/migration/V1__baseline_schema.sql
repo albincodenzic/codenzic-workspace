@@ -1,0 +1,9 @@
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+CREATE TABLE IF NOT EXISTS app_setup (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    key_name VARCHAR(100) NOT NULL UNIQUE,
+    key_value TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

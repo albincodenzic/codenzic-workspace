@@ -1,0 +1,9 @@
+package com.codenzic.workspace.company.application;
+import com.codenzic.workspace.audit.application.AuditLogService; import com.codenzic.workspace.common.exception.BusinessException; import com.codenzic.workspace.common.security.CurrentUser; import com.codenzic.workspace.company.domain.CompanySettings; import com.codenzic.workspace.company.infrastructure.CompanySettingsRepository; import com.codenzic.workspace.company.presentation.dto.CompanySettingsDto; import lombok.RequiredArgsConstructor; import org.springframework.http.HttpStatus; import org.springframework.stereotype.Service; import org.springframework.transaction.annotation.Transactional; import java.util.*;
+@Service @RequiredArgsConstructor public class CompanySettingsService {
+ private final CompanySettingsRepository repo; private final AuditLogService audit;
+ @Transactional(readOnly=true) public CompanySettingsDto get(){ UUID org=scope(); return to(repo.findById(org).orElseGet(()->new CompanySettings(org,"UTC","USD","[\"MONDAY\",\"TUESDAY\",\"WEDNESDAY\",\"THURSDAY\",\"FRIDAY\"]",null,null))); }
+ @Transactional public CompanySettingsDto update(CompanySettingsDto.Request r){ UUID org=scope(); CompanySettings s=repo.findById(org).orElseGet(()->new CompanySettings(org,r.timezone(),r.currency().toUpperCase(Locale.ROOT),r.workWeek(),r.logoUrl(),CurrentUser.id())); if(repo.existsById(org)) s.update(r.timezone(),r.currency().toUpperCase(Locale.ROOT),r.workWeek(),r.logoUrl(),CurrentUser.id()); CompanySettings saved=repo.save(s); audit.record("UPDATE","COMPANY_SETTINGS",org,"{}"); return to(saved); }
+ private UUID scope(){UUID id=CurrentUser.requiredOrganizationId(); if(id==null) throw new BusinessException("ORGANIZATION_REQUIRED","Organization scope is required",HttpStatus.FORBIDDEN); return id;}
+ private CompanySettingsDto to(CompanySettings s){return new CompanySettingsDto(s.getOrganizationId(),s.getTimezone(),s.getCurrency(),s.getWorkWeek(),s.getLogoUrl(),s.getUpdatedAt());}
+}

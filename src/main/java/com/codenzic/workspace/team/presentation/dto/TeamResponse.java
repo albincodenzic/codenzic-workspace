@@ -1,0 +1,1 @@
+package com.codenzic.workspace.team.presentation.dto; import java.util.UUID; import java.time.LocalDate; public record TeamResponse(UUID id, UUID organizationId, UUID departmentId, String name, String description) {}
