@@ -1,11 +1,14 @@
 package com.codenzic.workspace.identity.presentation.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import com.codenzic.workspace.identity.domain.AccountStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@Schema(description = "User Update Request payload.")
 public record UserUpdateRequest(
         @NotBlank(message = "First name is required")
         @Size(max = 100, message = "First name must not exceed 100 characters")

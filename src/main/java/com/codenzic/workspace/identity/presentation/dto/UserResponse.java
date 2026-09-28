@@ -1,5 +1,7 @@
 package com.codenzic.workspace.identity.presentation.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import com.codenzic.workspace.identity.domain.AccountStatus;
 import com.codenzic.workspace.identity.domain.User;
 
@@ -7,6 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Schema(description = "User Response payload.")
 public record UserResponse(
         UUID id,
         String email,
