@@ -30,8 +30,7 @@ public class AuthController {
     @PreAuthorize("hasAuthority('EMPLOYEE_CREATE')")
     ResponseEntity<ApiResponse<AuthResponse>> register(
             @Valid @RequestBody RegisterRequest request,
-            HttpServletRequest httpRequest
-    ) {
+            HttpServletRequest httpRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success(authService.register(request), httpRequest.getRequestURI()));
     }

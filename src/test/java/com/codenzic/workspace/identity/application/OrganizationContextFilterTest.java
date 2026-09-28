@@ -6,8 +6,6 @@ import com.codenzic.workspace.identity.domain.AccountStatus;
 import com.codenzic.workspace.identity.domain.User;
 import com.codenzic.workspace.organization.domain.OrganizationStatus;
 import com.codenzic.workspace.organization.infrastructure.OrganizationRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -71,7 +69,7 @@ class OrganizationContextFilterTest {
     }
 
     private OrganizationContextFilter newFilter(OrganizationRepository organizations) {
-        return new OrganizationContextFilter(organizations, new ObjectMapper().registerModule(new JavaTimeModule()));
+        return new OrganizationContextFilter(organizations);
     }
 
     private MockHttpServletRequest request(String organizationId) {

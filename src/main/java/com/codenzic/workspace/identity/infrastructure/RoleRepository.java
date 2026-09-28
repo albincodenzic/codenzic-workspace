@@ -41,4 +41,7 @@ public interface RoleRepository extends JpaRepository<Role, UUID> {
     @Modifying
     @Query(value = "delete from role_permissions where role_id = :roleId", nativeQuery = true)
     void deleteRolePermissions(@Param("roleId") UUID roleId);
+
+    @EntityGraph(attributePaths = "permissions")
+    Optional<Role> findByNameAndPlatformRoleTrueAndOrganizationIdIsNull(String name);
 }

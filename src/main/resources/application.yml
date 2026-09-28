@@ -1,11 +1,13 @@
 spring:
   application:
     name: workspace-backend
+
   datasource:
     url: jdbc:postgresql://localhost:5432/codenzic-workspace
     username: postgres
     password: albin123
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: validate
@@ -14,21 +16,29 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
   flyway:
     enabled: true
     baseline-on-migrate: true
     clean-disabled: true
+
 server:
   port: 8080
+
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+
 security:
   jwt:
     secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
     expiration: ${JWT_EXPIRATION:PT1H}
+
+  bootstrap:
+    super-admin-secret: ${SUPER_ADMIN_BOOTSTRAP_SECRET:}
+
 logging:
   level:
     org.hibernate.SQL: INFO
